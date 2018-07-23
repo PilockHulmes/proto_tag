@@ -116,7 +116,7 @@ func (t *tag) Generate(file *generator.FileDescriptor) {
 
 		// begin to replace tag
 		fieldName := getFieldName(lineContent)
-		tagComment := t.comments[structName][toSnake(fieldName)]
+		tagComment := t.comments[structName][toLowerFirst(fieldName)]
 		newLine := insertTag(lineContent, tagComment)
 		newStub.WriteString(newLine + "\n")
 	}
@@ -200,15 +200,17 @@ func getFieldName(line string) string {
 	return ""
 }
 
-// cammelCase to unserscore
-func toSnake(str string) string {
-	matchFirstCap := regexp.MustCompile("(.)([A-Z][a-z]+)")
-	matchAllCap := regexp.MustCompile("([a-z0-9])([A-Z])")
+// CammelCase to Lower Camel Case
+func toLowerFirst(str string) string {
+	if str == "" {
+		return str
+	}
 
-	snake := matchFirstCap.ReplaceAllString(str, "${1}_${2}")
-	snake = matchAllCap.ReplaceAllString(snake, "${1}_${2}")
+	if len(str) == 1 {
+		return strings.ToLower(str[:1])
+	}
 
-	return strings.ToLower(snake)
+	return strings.ToLower(str[:1]) + str[1:]
 }
 
 // insert a tag into field line
