@@ -7,7 +7,7 @@ go get github.com/golang/protobuf
 cd $GOPATH/src/github.com/golang/protobuf/protoc-gen-go
 git clone https://github.com/PilockHulmes/proto_tag tag
 echo 'import _ "github.com/golang/protobuf/protoc-gen-go/tag"' >> $GOPATH/src/github.com/golang/protobuf/protoc-gen-go/link_grpc.go
-github.com/golang/protobuf/protoc-gen-go
+cd github.com/golang/protobuf/protoc-gen-go && go install
 ```
 
 # Proto Message Example
